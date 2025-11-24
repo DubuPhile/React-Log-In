@@ -1,18 +1,23 @@
-import { useRef,useState, useEffect, useContext } from "react";
-import AuthContext from "./context/AuthProvider";
+import { useRef,useState, useEffect } from "react";
+import useAuth from "../hooks/useAuth";
+import { Link,useNavigate, useLocation } from "react-router-dom";
 
-import axios from "./api/axios";
+import axios from "../api/axios";
 const LOGIN_URL = '/auth';
 
 const Login = () => {
-    const {setAuth} = useContext(AuthContext)
+    const {setAuth} = useAuth();
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
     const userRef = useRef();
     const errorRef = useRef();
 
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
     
     useEffect(() => {
         userRef.current.focus();
@@ -26,20 +31,20 @@ const Login = () => {
         e.preventDefault();
         
         try{
-            const response = await axios.post(LOGIN_URL, JSON.stringify({user, pwd}),
+            const response = await axios.post(LOGIN_URL,{ user, pwd },
                 {
                     headers: {'Content-Type': 'application/json'},
                     withCredentials: true
                 }
             );
-            console.log(JSON.stringify(response?.data))
+            console.log(response?.data)
 
             const accessToken = response?.data.accessToken;
             const roles = response?.data?.roles;
             setAuth({user, pwd, roles, accessToken});
             setUser('');
             setPwd('');
-            setSuccess(true);
+            navigate(from, {replace: true});
         } catch(err){
             if(!err?.response) {
                 setErrMsg('No response from Server');
@@ -60,15 +65,7 @@ const Login = () => {
     }
 
   return (
-    <>
-    {success ? (
-        <section>
-            <h1>You are Logged in!</h1>
-            <p>
-                <a href="#">Go to Home</a>
-            </p>
-        </section>
-    ) : (
+    
     <section>
         <p ref = {errorRef} className = {errMsg ? "errmsg" : "offscreen"} aria-live = "assertive">{errMsg}</p>
         <h1>Sign In</h1>
@@ -98,12 +95,10 @@ const Login = () => {
             Need an Account?<br/>
             <span className="line">
                 {/*put rounter link here*/}
-                <a href="#">Sign Up</a>
+                <Link to = "/register">Sign Up</Link>
             </span>
         </p>
     </section>
-    )}
-    </>
   )
 }
 
