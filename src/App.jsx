@@ -11,6 +11,11 @@ import Unauthorized from './components/Unauthorized.jsx'
 import RequireAuth from './components/RequireAuth.jsx'
 import { Routes, Route } from 'react-router-dom'
 
+const ROLES = {
+  'User': 2001,
+  'Editor': 1984,
+  'Admin': 5150
+}
 function App() {
   
   return (
@@ -23,16 +28,16 @@ function App() {
         <Route path='unauthorized' element={<Unauthorized/>}/>
 
         {/*protected routes*/}
-        <Route element = {<RequireAuth allowedRoles={[2001]}/>}>
+        <Route element = {<RequireAuth allowedRoles={[ROLES.User]}/>}>
           <Route path='/' element={<Home/>}/>
         </Route>
-        <Route element = {<RequireAuth allowedRoles={[1984]}/>}>
+        <Route element = {<RequireAuth allowedRoles={[ROLES.Editor]}/>}>
           <Route path='editor' element={<Editor/>}/>
         </Route>
-        <Route element = {<RequireAuth allowedRoles={[5150]}/>}>
+        <Route element = {<RequireAuth allowedRoles={[ROLES.Admin]}/>}>
           <Route path='admin' element={<Admin/>}/>
         </Route>
-        <Route element = {<RequireAuth allowedRoles={[5150, 1984]}/>}>
+        <Route element = {<RequireAuth allowedRoles={[ROLES.Admin, ROLES.Editor]}/>}>
           <Route path='lounge' element={<Lounge/>}/>
         </Route>
         {/*catch all*/}
