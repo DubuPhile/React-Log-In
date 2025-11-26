@@ -13,7 +13,7 @@ html {
 
 body {
     min-height: 100vh;
-    background-color: dodgerblue;
+    background-color: rgb(116, 30, 255);
 }
 
 .App {
@@ -33,7 +33,12 @@ section {
     flex-direction: column;
     justify-content: flex-start;
     padding: 1rem;
+    border-radius: 15px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
     background-color: rgba(0,0,0,0.4);
+}
+h1 {
+    color: yellow
 }
 
 form {
@@ -42,6 +47,7 @@ form {
     justify-content: space-evenly;
     flex-grow: 1;
     padding-bottom: 1rem;
+    color: yellow
 }
 
 a, a:visited {
@@ -65,6 +71,13 @@ button {
 
 button {
   padding: 0.5rem;
+  background-color: hsl(0, 0%, 100%);
+}
+button:hover {
+    background-color: hsl(0, 0%, 80%);
+}
+button:active {
+    background-color: hsl(0, 0%, 60%);
 }
 
 .instructions {
