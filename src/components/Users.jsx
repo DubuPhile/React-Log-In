@@ -23,7 +23,7 @@ const Users = () => {
                 isMounted && setUsers(response.data)
             }
             catch(err){
-                if (axios.isCancel(err)) return;
+                if (axios.isCancel(err)) return
                 console.error(err);
                 navigate('/login', {state: {from: location}, replace: true});
             }
@@ -41,7 +41,7 @@ const Users = () => {
         <h2>Users List</h2>
         {users?.length 
             ? (
-                <ul>
+                <ul style = {{listStyleType: "none", padding: 0, margin: 0}}>
                     {users.map((user, i) => <li key={i}>{user?.username}</li>)}
                 </ul>
             ) : <p> No User to display.</p>
