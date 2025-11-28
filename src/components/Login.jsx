@@ -43,9 +43,8 @@ const Login = () => {
             console.log(response?.data)
 
             const accessToken = response?.data.accessToken;
-            const roles = response?.data?.roles;
-            setAuth({user, pwd, roles, accessToken});
-            //setUser('');
+            setAuth({ user, accessToken });
+
             reset();
             setPwd('');
             navigate(from, {replace: true});
@@ -67,13 +66,6 @@ const Login = () => {
 
         
     }
-    // const togglePersist = () => {
-    //     setPersist(prev => !prev);
-    // }
-
-    // useEffect(() => {
-    //     localStorage.setItem("persist", persist);
-    // },[persist])
 
   return (
     
@@ -87,8 +79,6 @@ const Login = () => {
                 id="username"
                 ref={userRef}
                 autoComplete="off"
-                // onChange={(e) => setUser(e.target.value)}
-                // value={user}
                 {...attributeObj}
                 required
             />
@@ -115,7 +105,6 @@ const Login = () => {
         <p>
             Need an Account?<br/>
             <span className="line">
-                {/*put rounter link here*/}
                 <Link to = "/register">Sign Up</Link>
             </span>
         </p>

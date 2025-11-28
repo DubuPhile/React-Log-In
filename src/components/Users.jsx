@@ -19,8 +19,9 @@ const Users = () => {
                     signal: controller.signal
                     
                 });
+                const username = response.data.map(user => user.username)
                 console.log(response.data)
-                isMounted && setUsers(response.data)
+                isMounted && setUsers(username)
             }
             catch(err){
                 if (axios.isCancel(err)) return
@@ -42,7 +43,7 @@ const Users = () => {
         {users?.length 
             ? (
                 <ul style = {{listStyleType: "none", padding: 0, margin: 0}}>
-                    {users.map((user, i) => <li key={i}>{user?.username}</li>)}
+                    {users.map((user, i) => <li key={i}>{user}</li>)}
                 </ul>
             ) : <p> No User to display.</p>
         }
